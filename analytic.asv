@@ -33,14 +33,12 @@ sigmapolar=[sigmar, sigmartheta; sigmartheta, sigmatheta];
 
 %Strain distribution
 ConstPolarVoig=(1/E)*[1, -v, 0; -v, 1, 0;0, 0,2*(1+v)];
-SigmaPolarVoig=[sigmar; sigmatheta; sigmartheta];
-StrainPolarVoig=ConstPolarVoig*SigmaPolarVoig;
+sigmaolarVoig=[sigmar; sigmatheta, sigmartheta];
+strainPolarVoig=ConstVoig*sigmapolarvoig;
 
-
-StrainPolar=[StrainPolarVoig(1), StrainPolarVoig(3); StrainPolarVoig(3), StrainPolarVoig(2)];
 
 %Transformation in cartesian coordinates
 stress=Cpr*sigmapolar*transpose(Cpr);
-strain=Cpr*StrainPolar*transpose(Cpr);
+
 
 end

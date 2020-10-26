@@ -1,0 +1,33 @@
+N=100;
+r = linspace(0.2,0.4,N);
+theta = linspace(0,pi/2,N);
+[R,THETA]=meshgrid(r,theta);
+
+X=R.*cos(THETA);
+Y=R.*sin(THETA);
+
+
+sigmar=zeros(N,N);
+sigmatheta=zeros(N,N);
+sigmartheta=zeros(N,N);
+
+
+
+for i = 1 : N
+    for j = 1 : N
+            [stress, strain]=analytic([X(i,j);Y(i,j)]);
+            sigmax(i,j)=sigma(1,1);
+            sigmatheta(i,j)=sigma(2,2);
+            sigmartheta(i,j)=sigma(1,2);
+    end
+end
+
+figure('Name','Stress');
+contourf(X,Y,sigmar)
+figure('Name','Measured Data');
+contourf(X,Y,sigmatheta)
+figure('Name','Measured Data');
+contourf(X,Y,sigmartheta)
+
+
+

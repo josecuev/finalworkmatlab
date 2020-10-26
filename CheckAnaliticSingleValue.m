@@ -1,6 +1,5 @@
-Xr=[0;1]
+Xr=[0.2;0.2];
 
-theta=atan(X(1)/X(2))
-Crp=[cos(theta), sin(theta); -sin(theta), cos(theta) ]
+[stress, strain]=analytic(Xr)
 
 

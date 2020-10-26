@@ -7,27 +7,40 @@ X=R.*cos(THETA);
 Y=R.*sin(THETA);
 
 
-sigmar=zeros(N,N);
-sigmatheta=zeros(N,N);
-sigmartheta=zeros(N,N);
+sigmax=zeros(N,N);
+sigmay=zeros(N,N);
+sigmaxy=zeros(N,N);
+
+strainx=zeros(N,N);
+strainy=zeros(N,N);
+strainxy=zeros(N,N);
 
 
 
 for i = 1 : N
     for j = 1 : N
-            [sigma]=analytic([X(i,j);Y(i,j)]);
-            sigmar(i,j)=sigma(1,1);
-            sigmatheta(i,j)=sigma(2,2);
-            sigmartheta(i,j)=sigma(1,2);
+            [stress, strain]=analytic([X(i,j);Y(i,j)]);
+            sigmax(i,j)=stress(1,1);
+            sigmay(i,j)=stress(2,2);
+            sigmaxy(i,j)=stress(1,2);
+            
+            strainx(i,j)=strain(1,1);
+            strainy(i,j)=strain(2,2);
+            strainxy(i,j)=strain(1,2);
     end
 end
 
-figure(1)
-contourf(X,Y,sigmar)
-figure(2)
-contourf(X,Y,sigmatheta)
-figure(3)
-contourf(X,Y,sigmartheta)
+figure('Name','Stress X');
+contourf(X,Y,sigmax)
+figure('Name','Stress Y');
+contourf(X,Y,sigmay)
+figure('Name','Stress XY');
+contourf(X,Y,sigmaxy)
 
-
+figure('Name','Strain X');
+contourf(X,Y,strainx)
+figure('Name','Strain Y');
+contourf(X,Y,strainy)
+figure('Name','Strain XY');
+contourf(X,Y,strainxy)
 
