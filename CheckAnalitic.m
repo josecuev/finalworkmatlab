@@ -15,11 +15,10 @@ sigmartheta=zeros(N,N);
 
 for i = 1 : N
     for j = 1 : N
-            [sigmart, sigmathetat, sigmarthetat]=analytic(R(i,j),THETA(i,j));
-            sigmar(i,j)=sigmart;
-            sigmatheta(i,j)=sigmathetat;
-            sigmartheta(i,j)=sigmarthetat;
-
+            [sigma]=analytic([X(i,j);Y(i,j)]);
+            sigmar(i,j)=sigma(1,1);
+            sigmatheta(i,j)=sigma(2,2);
+            sigmartheta(i,j)=sigma(1,2);
     end
 end
 
