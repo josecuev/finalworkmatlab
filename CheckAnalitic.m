@@ -1,5 +1,8 @@
 N=100;
-r = linspace(0.2,0.4,N);
+
+[a, b, F, E, v] = ProblemParameters();
+
+r = linspace(a,b,N);
 theta = linspace(0,pi/2,N);
 [R,THETA]=meshgrid(r,theta);
 
@@ -43,4 +46,6 @@ figure('Name','Strain Y');
 contourf(X,Y,strainy)
 figure('Name','Strain XY');
 contourf(X,Y,strainxy)
+
+
 
