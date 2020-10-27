@@ -1,6 +1,6 @@
 clc;
 clear;
-[a, b, F, E, v, Lc] = ProblemParameters();
+[a, b, F, E, v] = ProblemParameters();
 
 %Determines G from E and v
 G=E/(2*(1+v));
@@ -9,7 +9,7 @@ G=E/(2*(1+v));
 er=round((pi*(a+b)/4)/(b-a));
 
 %Number of elements in r and theta direction.
-Lr=Lc;
+Lr=2;
 Ltheta=round(Lr*er);
 L=Lr*Ltheta;
 
@@ -56,11 +56,10 @@ for i = 1 : Lr
     end
 end
 
-InmputFileName=sprintf('CurvedCantilever_Lc=%d.txt',Lc)
-fileID = fopen(InmputFileName,'w');
+fileID = fopen('ProblemFormulation.txt','w');
 fprintf(fileID,'No._material_props:    3\n');
-fprintf(fileID,'    Shear_modulus:   %0.2f\n', G);
-fprintf(fileID,'    Poissons_ratio:  %0.2f\n', v);
+fprintf(fileID,'    Shear_modulus:   10.\n');
+fprintf(fileID,'    Poissons_ratio:  0.3\n');
 fprintf(fileID,'    Plane_strain/stress: 1\n');
 fprintf(fileID,'No._coords_per_node:   2\n');
 fprintf(fileID,'No._DOF_per_node:      2\n');
@@ -88,8 +87,6 @@ for i= 1 : Lr
 end
 
 fclose(fileID);
-
-
 
 
 
