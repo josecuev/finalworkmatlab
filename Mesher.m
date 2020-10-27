@@ -62,7 +62,7 @@ fprintf(fileID,'No._coords_per_node:   2\n');
 fprintf(fileID,'No._nodes:             %d\n', L);
 fprintf(fileID,'Nodal_coords:\n');
     for i= 1 : N
-        fprintf(fileID,'    %8.4f   %8.4f\n',COORDS(i,1),COORDS(i,2));
+        fprintf(fileID,'    %0.4f   %0.4f\n',COORDS(i,1),COORDS(i,2));
     end
 
 fclose(fileID);
