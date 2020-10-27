@@ -8,4 +8,3 @@ E=2e11; %Young Modulus N/m^2
 v=0.26; % Poisson's coificient
 
 end
-

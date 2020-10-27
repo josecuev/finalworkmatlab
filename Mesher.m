@@ -8,7 +8,6 @@ er=round((pi*(a+b)/4)/(b-a));
 %Number of elements in r and theta direction.
 Lr=3;
 Ltheta=round(Lr*er);
-Ltheta=3;
 L=Lr*Ltheta;
 
 %Number of nodes in r and theta direction.
@@ -20,15 +19,16 @@ N=Nr*Ntheta;
 %Grid of polar coordinates
 r = linspace(a,b,Nr);
 theta = linspace(0,pi/2,Ntheta);
-[R,THETA]=meshgrid(r,theta);
+[THETA, R]=meshgrid(theta,r);
+
+R=reshape(R,[],1); % convert matrix to column vector
+THETA=reshape(THETA,[],1); % convert matrix to column vector
 
 %Transform into rectangular coordinates
 X=R.*cos(THETA);
 Y=R.*sin(THETA);
 
-%Create a list of vectors of Nodes coordinates
-X=X(:);
-Y=Y(:);
+COORDS=[X,Y];
 
 %Plot the nodes
 scatter(X,Y)
@@ -36,19 +36,36 @@ scatter(X,Y)
 
 %Generate mesh conectivity info
 
-con=zeros(L,1);
+con1=zeros(L,1);
+con2=zeros(L,1);
+con3=zeros(L,1);
+con4=zeros(L,1);
+con5=zeros(L,1);
 
 k=1;
 for i = 1 : Ltheta
     for j = 1 : Lr
-        con(k,1)=k;
-        con(k,2)=Nr*(i-1)+j;
-        con(k,3)=Nr*(i-1)+j+1;
-        con(k,4)=Nr*(i)+j+1;
-        con(k,5)=Nr*(i)+j;
+        con1(k)=k;
+        con2(k)=Nr*(i-1)+j;
+        con3(k)=Nr*(i-1)+j+1;
+        con4(k)=Nr*(i)+j+1;
+        con5(k)=Nr*(i)+j;
         k=k+1;
     end
 end
+
+fileID = fopen('ProblemFormulation.txt','w');
+fprintf(fileID,'No._material_props:    3\n');
+fprintf(fileID,'    Shear_modulus:   10.\n');
+fprintf(fileID,'    Poissons_ratio:  0.3\n');
+fprintf(fileID,'No._coords_per_node:   2\n');
+fprintf(fileID,'No._nodes:             %d\n', L);
+fprintf(fileID,'Nodal_coords:\n');
+    for i= 1 : N
+        fprintf(fileID,'    %8.4f   %8.4f\n',COORDS(i,1),COORDS(i,2));
+    end
+
+fclose(fileID);
 
 
 
