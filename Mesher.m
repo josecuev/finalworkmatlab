@@ -6,13 +6,13 @@ clear;
 er=round((pi*(a+b)/4)/(b-a));
 
 %Number of elements in r and theta direction.
-Lr=3;
+Lr=4;
 Ltheta=round(Lr*er);
+Ltheta=7;
 L=Lr*Ltheta;
 
 %Number of nodes in r and theta direction.
 Nr=Lr+1;
-Ntheta=Ltheta+1;
 Ntheta=Ltheta+1;
 N=Nr*Ntheta;
 
@@ -58,12 +58,31 @@ fileID = fopen('ProblemFormulation.txt','w');
 fprintf(fileID,'No._material_props:    3\n');
 fprintf(fileID,'    Shear_modulus:   10.\n');
 fprintf(fileID,'    Poissons_ratio:  0.3\n');
+fprintf(fileID,'    Plane_strain/stress: 1\n');
 fprintf(fileID,'No._coords_per_node:   2\n');
-fprintf(fileID,'No._nodes:             %d\n', L);
+fprintf(fileID,'No._DOF_per_node:      2\n');
+fprintf(fileID,'No._nodes:             %d\n', N);
 fprintf(fileID,'Nodal_coords:\n');
-    for i= 1 : N
-        fprintf(fileID,'    %0.4f   %0.4f\n',COORDS(i,1),COORDS(i,2));
-    end
+for i= 1 : N
+    fprintf(fileID,'%0.4f\t%0.4f\n',COORDS(i,1),COORDS(i,2));
+end
+fprintf(fileID,'No._elements:                       %d\n', L);
+fprintf(fileID,'Max_no._nodes_on_any_one_element:   4\n');
+fprintf(fileID,'element_identifier; no._nodes_on_element; connectivity:\n');
+for i= 1 : L
+    fprintf(fileID,'%d\t4\t%d\t%d\t%d\t%d\n',con1(i),con2(i),con3(i),con4(i),con5(i));
+end
+fprintf(fileID,'No._nodes_with_prescribed_DOFs:  %d\n', Lr);
+fprintf(fileID,'Node_#, DOF#, Value:\n');
+for i= Lr*(Ltheta-1)+1 : L
+    fprintf(fileID,'%d\t1\t0.0\n',i);
+    fprintf(fileID,'%d\t2\t0.0\n',i);
+end
+fprintf(fileID,'No._elements_with_prescribed_loads: %d\n', Lr);
+fprintf(fileID,'Element_#, Face_#, Traction_components\n');
+for i= 1 : Lr
+    fprintf(fileID,'%d\t1\t%0.4f\t%0.4f\n',i,-F,0);
+end
 
 fclose(fileID);
 

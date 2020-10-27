@@ -45,7 +45,7 @@ function FEM_2Dor3D_linelast_standard
 %
 % YOU NEED TO CHANGE THE PATH & FILE NAME TO POINT TO YOUR INPUT FILE
 %
-infile=fopen('Linear_elastic_quad4.txt','r');
+infile=fopen('Linear_elastic_pressurized_cylinder.txt','r');
 outfile=fopen('FEM_results.txt','w');
 
 [nprops,materialprops,ncoord,ndof,nnode,coords,nelem,maxnodes,connect,nelnodes,elident,nfix,fixnodes,ndload,dloads] = read_input_file(infile);
