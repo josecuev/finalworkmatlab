@@ -36,6 +36,8 @@ scatter(X,Y)
 
 %Generate mesh conectivity info
 
+con=zeros(L,1);
+
 k=1;
 for i = 1 : Ltheta
     for j = 1 : Lr
