@@ -1,15 +1,21 @@
+clc;
+clear;
 [a, b, F, E, v] = ProblemParameters();
 
 %Defines a ratio of the elements based on the geometry
 er=round((pi*(a+b)/4)/(b-a));
 
 %Number of elements in r and theta direction.
-dr=10;
-Ntheta=round(Nr*er);
+Lr=3;
+Ltheta=round(Lr*er);
+Ltheta=3;
+L=Lr*Ltheta;
 
-%Number of total elements
-N
-N=(Nr-1)*(Ntheta-1);
+%Number of nodes in r and theta direction.
+Nr=Lr+1;
+Ntheta=Ltheta+1;
+Ntheta=Ltheta+1;
+N=Nr*Ntheta;
 
 %Grid of polar coordinates
 r = linspace(a,b,Nr);
@@ -21,13 +27,25 @@ X=R.*cos(THETA);
 Y=R.*sin(THETA);
 
 %Create a list of vectors of Nodes coordinates
-%nodes = [X(:), Y(:)];
 X=X(:);
 Y=Y(:);
 
 %Plot the nodes
 scatter(X,Y)
 
+
 %Generate mesh conectivity info
+
+k=1;
+
+for i = 1 : Ltheta
+    for j = 1 : Lr
+        con(k,1)=Nr*(i-1)+j;
+        con(k,2)=[,,Nr*(i)+j+1,Nr*(i)+j ]
+        k=k+1;
+    end
+end
+
+k
 
 
