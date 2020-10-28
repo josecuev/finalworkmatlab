@@ -1,4 +1,4 @@
-function FEM_2Dor3D_linelast_standard
+function FEM_2Dor3D_linelast_standard(inputfilename)
 %
 %          Example 2D and 3D Linear elastic FEM code
 %            Currently coded to run either plane strain or plane stress (2DOF) or general 3D but
@@ -39,13 +39,19 @@ function FEM_2Dor3D_linelast_standard
 %  the usual fashion (e.g. hit the green arrow at the top of the MATLAB
 %  editor window)
 % 
+
+
+% ==================== Mesh the problem and create the imput file ===========================
+% 
+
+
 %
 % ==================== Read data from the input file ===========================
 %
 %
 % YOU NEED TO CHANGE THE PATH & FILE NAME TO POINT TO YOUR INPUT FILE
 %
-infile=fopen('CurvedCantilever_Lc=3.txt','r');
+infile=fopen(inputfilename,'r');
 outfile=fopen('FEM_results.txt','w');
 
 [nprops,materialprops,ncoord,ndof,nnode,coords,nelem,maxnodes,connect,nelnodes,elident,nfix,fixnodes,ndload,dloads] = read_input_file(infile);

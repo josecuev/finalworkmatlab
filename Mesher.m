@@ -1,6 +1,6 @@
-clc;
-clear;
-[a, b, F, E, v, Lc] = ProblemParameters();
+function [InmputFileName]=Mesher(Lc)
+
+[a, b, F, E, v] = ProblemParameters();
 
 %Determines G from E and v
 G=E/(2*(1+v));
@@ -33,7 +33,7 @@ Y=R.*sin(THETA);
 COORDS=[X,Y];
 
 %Plot the nodes
-scatter(X,Y)
+%scatter(X,Y)
 
 
 %Generate mesh conectivity info
@@ -89,7 +89,7 @@ end
 
 fclose(fileID);
 
-
+end
 
 
 
