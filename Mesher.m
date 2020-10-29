@@ -223,20 +223,25 @@ else
 end
 
 
+if Q==8
+    fprintf(fileID,'No._nodes_with_prescribed_DOFs:  %d\n', 2*Nr+2*Lr);
+else
+    fprintf(fileID,'No._nodes_with_prescribed_DOFs:  %d\n', 2*Nr);
+end
 
-fprintf(fileID,'No._nodes_with_prescribed_DOFs:  %d\n', 2*(Nr+Lr));
 fprintf(fileID,'Node_#, DOF#, Value:\n');
 
-
-%locate the target nodes (all of them has a 0 x coorinate)
-for i=1 : N+Nm
-    if COORDS(i,1)==0
-        fprintf(fileID,'%d\t3\t0.0\n',Ntheta*(i-1)+1);
-        fprintf(fileID,'%d\t4\t0.0\n',Ntheta*(i-1)+1);
+if Q==8
+    for i=1 : Lr
+        fprintf(fileID,'%d\t1\t0.0\n',PDFM(i));
+        fprintf(fileID,'%d\t2\t0.0\n',PDFM(i));
     end
 end
 
-
+for i=1 : Nr
+    fprintf(fileID,'%d\t1\t0.0\n',Ntheta*(i-1)+1);
+    fprintf(fileID,'%d\t2\t0.0\n',Ntheta*(i-1)+1);
+end
 
 
 fprintf(fileID,'No._elements_with_prescribed_loads: %d\n', Lr);
