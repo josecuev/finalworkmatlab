@@ -190,6 +190,8 @@ COORDS=[X,Y];
 
 %Plot the nodes
 scatter(X,Y)
+a = [1:size(X)]'; b = num2str(a); c = cellstr(b);
+text(X, Y, c);
 
 
 InmputFileName=sprintf('CurvedCantilever_Lc=%d_Q=%d.txt',Lc, Q)
