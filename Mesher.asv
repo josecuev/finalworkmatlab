@@ -53,8 +53,6 @@ if Q==8
     Nm=Lr*Ntheta+Ltheta*Nr;
     midPointMap=containers.Map;
     l=N+1;
-    m=1;
-    PDFM=zeros(Lr,1);
 end
 
 
@@ -176,10 +174,9 @@ for i = 1 : Lr
                 con9(k)=midPointMap(newkey);
                 l=l+1;
             end
-            if k==(i-1)*Ltheta+1
-                PDFM(m)=con9(k);
-                m=m+1;
-            end
+        end
+        if k==(j-1)*Lsigma+1
+            k
         end
         k=k+1;
     end
@@ -235,7 +232,6 @@ for i=1 : N+Nm
         fprintf(fileID,'%d\t4\t0.0\n',Ntheta*(i-1)+1);
     end
 end
-
 
 
 
