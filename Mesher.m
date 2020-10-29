@@ -1,9 +1,6 @@
-%function [InmputFileName]=Mesher(Lc,Q)
+function [InmputFileName]=Mesher(Lc,Q)
 
 
-
-Lc=2;
-Q=8;
 
 [a, b, F, E, v] = ProblemParameters();
 
@@ -51,8 +48,9 @@ con9=zeros(L,1);
 
 
 %If the element is cuadratic, inicialize some variables
+Nm=0;
 if Q==8
-    Nm=Lr*Ntheta+Ltheta*Nr
+    Nm=Lr*Ntheta+Ltheta*Nr;
     midPointMap=containers.Map;
     l=N+1;
 end
@@ -189,7 +187,7 @@ COORDS=[X,Y];
 scatter(X,Y)
 
 
-InmputFileName=sprintf('CurvedCantilever_Lc=%d.txt',Lc)
+InmputFileName=sprintf('CurvedCantilever_Lc=%d_Q=%d.txt',Lc, Q)
 fileID = fopen(InmputFileName,'w');
 fprintf(fileID,'No._material_props:    3\n');
 fprintf(fileID,'    Shear_modulus:   %0.2f\n', G);
@@ -207,14 +205,30 @@ end
 fprintf(fileID,'No._elements:                       %d\n', L);
 fprintf(fileID,'Max_no._nodes_on_any_one_element:   %d\n', Q);
 fprintf(fileID,'element_identifier; no._nodes_on_element; connectivity:\n');
-for i= 1 : L
-    fprintf(fileID,'%d\t4\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n',con1(i),con2(i),con3(i),con4(i),con5(i),con6(i),con7(i),con8(i),con9(i));
+
+%conectivity depends on Q
+if Q==8
+    for i= 1 : L
+        fprintf(fileID,'%d\t8\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n',con1(i),con2(i),con3(i),con4(i),con5(i),con6(i),con7(i),con8(i),con9(i));
+    end
+else
+    for i= 1 : L
+        fprintf(fileID,'%d\t4\t%d\t%d\t%d\t%d\n',con1(i),con2(i),con3(i),con4(i),con5(i));
+    end
 end
-fprintf(fileID,'No._nodes_with_prescribed_DOFs:  %d\n', 2*Nr);
+
+
+
+fprintf(fileID,'No._nodes_with_prescribed_DOFs:  %d\n', 2*(Nr+Lr));
 fprintf(fileID,'Node_#, DOF#, Value:\n');
-for i=1 : Nr
-    fprintf(fileID,'%d\t3\t0.0\n',Ntheta*(i-1)+1);
-    fprintf(fileID,'%d\t4\t0.0\n',Ntheta*(i-1)+1);
+
+
+%locate the target nodes (all of them has a 0 x coorinate)
+for i=1 : N+Nm
+    if COORDS(i,1)==0
+        fprintf(fileID,'%d\t3\t0.0\n',Ntheta*(i-1)+1);
+        fprintf(fileID,'%d\t4\t0.0\n',Ntheta*(i-1)+1);
+    end
 end
 fprintf(fileID,'No._elements_with_prescribed_loads: %d\n', Lr);
 fprintf(fileID,'Element_#, Face_#, Traction_components\n');
@@ -224,7 +238,7 @@ end
 
 fclose(fileID);
 
-%end
+end
 
 
 
